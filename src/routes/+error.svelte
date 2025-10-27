@@ -15,5 +15,4 @@
 </div>
 
 <style>
-  /* Anda bisa menambahkan gaya kustom di sini jika diperlukan */
 </style>
