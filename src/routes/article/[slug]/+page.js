@@ -26,7 +26,7 @@ export async function load({ params: { slug }, fetch }) {
     console.error('Error fetching discussion:', error);
     return {
       discussion: null,
-      error: error.message
+      error: (error instanceof Error) ? error.message : 'An unknown error occurred'
     };
   }
 }

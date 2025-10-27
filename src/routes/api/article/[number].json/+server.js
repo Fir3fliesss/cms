@@ -22,7 +22,7 @@ export const GET = async ({ params: { number }, fetch, setHeaders }) => {
   try {
     const {
       repository: { discussion },
-    } = await fetcher(query, variables, fetch);
+    } = await fetcher(query, fetch, variables);
 
     setHeaders({
       "cache-control": "max-age=600",
@@ -32,7 +32,7 @@ export const GET = async ({ params: { number }, fetch, setHeaders }) => {
   } catch (error) {
     console.error('Error fetching discussion:', error);
     return json(
-      { error: 'Failed to fetch discussion', details: error.message },
+      { error: 'Failed to fetch discussion', details: error instanceof Error ? error.message : 'An unknown error occurred' },
       { status: 500 }
     );
   }

@@ -15,17 +15,22 @@ const query = `{
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch }) {
-  const res = await fetcher(query, {}, fetch);
-  const {
-    repository: {
-      discussions: { nodes },
-    },
-  } = res;
-  nodes.map((node) => {
-    node.slug = slugify(node.title);
-  });
+  try {
+    const res = await fetcher(query, fetch, {});
+    const {
+      repository: {
+        discussions: { nodes },
+      },
+    } = res;
+    nodes.map((/** @type {{ title: string; number: number; createdAt: string; slug: string; }} */ node) => {
+      node.slug = slugify(node.title);
+    });
 
-  return {
-    nodes,
-  };
+    return {
+      nodes,
+    };
+  } catch (error) {
+    console.error("Error in load function:", error);
+    return { nodes: [] };
+  }
 }
