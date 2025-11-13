@@ -9,7 +9,7 @@
   <meta name="author" content="SynchronizeTeams" />
   <meta name="robots" content="index, follow" />
   <meta name="image" content="https://drive.usercontent.google.com/download?id=1mNq-7QcdnKZBYAp0f6IAlNjJU9QyMVxr&export=view&authuser=0" />
-  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 </svelte:head>
 
 <slot />

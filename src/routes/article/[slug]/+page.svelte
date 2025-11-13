@@ -85,7 +85,7 @@
   </style>
   
   <!-- Preload critical resources -->
-  <link rel="preload" href="favicon.png" as="image" type="image/png">
+  <link rel="preload" href="/favicon.png" as="image" type="image/png">
   
   <!-- DNS prefetch and preconnect for performance -->
   <link rel="dns-prefetch" href="//drive.usercontent.google.com">
@@ -126,8 +126,8 @@
   <link rel="canonical" href={currentUrl}>
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" type="image/png">
   
   <!-- Service Worker for caching (if available) -->
   {#if typeof window !== 'undefined' && 'serviceWorker' in navigator}
@@ -161,7 +161,7 @@
           "name": "SynchronizeTeams",
           "logo": {
             "@type": "ImageObject",
-            "url": "favicon.png"
+            "url": "/favicon.png"
           }
         },
         "datePublished": discussion?.createdAt,
