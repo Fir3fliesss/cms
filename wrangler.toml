@@ -1,0 +1,6 @@
+name = "github-cms"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-01-01"
+
+# Pages configuration
+pages_build_output_dir = ".svelte-kit/cloudflare"
