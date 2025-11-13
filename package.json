@@ -24,6 +24,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sindresorhus/slugify": "^2.2.0",
+		"@supabase/supabase-js": "^2.81.1",
 		"@tailwindcss/vite": "^4.1.16"
 	}
 }

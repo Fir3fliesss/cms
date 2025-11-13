@@ -1,4 +1,7 @@
 <script>
+  import { onMount, onDestroy } from 'svelte';
+  import { initUBA, trackClick } from '$lib/uba';
+
   export let data;
   $: ({ discussion, error } = data);
 
@@ -16,11 +19,30 @@
     avatarError = true;
   }
 
+  // UBA: Initialize tracking on mount
+  let cleanupUBA = () => {};
+
+  onMount(() => {
+    // Initialize UBA with scroll and duration tracking
+    cleanupUBA = initUBA({
+      trackScroll: true,
+      trackDuration: true
+    });
+  });
+
+  onDestroy(() => {
+    // Cleanup tracking on component destroy
+    cleanupUBA();
+  });
+
   // Share functionality
   function shareArticle() {
+    // UBA: Track share button click
+    trackClick('share_button');
+
     if (navigator.share && discussion) {
       const shareText = `📖 *${discussion.title}*\n\nby ${discussion.author?.login || 'Anonymous'}\n\n🔗 Baca selengkapnya di SynchronizeTeams:\n${window.location.href}`;
-      
+
       navigator.share({
         title: discussion.title || 'Article by SynchronizeTeams',
         text: shareText,
@@ -29,7 +51,7 @@
     } else {
       // Fallback: copy to clipboard with formatted text
       const shareText = `📖 *${discussion.title}*\n\nby ${discussion.author?.login || 'Anonymous'}\n\n🔗 Baca selengkapnya di SynchronizeTeams:\n${window.location.href}`;
-      
+
       navigator.clipboard.writeText(shareText).then(() => {
         alert('✅ Artikel berhasil disalin!\n\nSilakan bagikan ke platform favorit Anda.');
       }).catch(err => console.error('Failed to copy:', err));
@@ -40,7 +62,7 @@
   $: currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   // Extract first image from content for SEO - memoized
-  $: firstImage = discussion?.bodyHTML ? 
+  $: firstImage = discussion?.bodyHTML ?
     (() => {
       // Cache the regex result
       if (!discussion.bodyHTML) return null;
@@ -173,6 +195,7 @@
     <div class="mb-6">
       <a
         href="/"
+        on:click={() => trackClick('back_to_articles_top')}
         class="neo-brutal-border neo-brutal-shadow bg-white px-4 py-2 font-bold inline-flex items-center gap-2 hover:-translate-y-1 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded"
         aria-label="Kembali ke halaman artikel"
       >
@@ -311,6 +334,7 @@
     <div class="flex justify-between items-center mb-8">
       <a
         href="/"
+        on:click={() => trackClick('back_to_articles_bottom')}
         class="neo-brutal-border neo-brutal-shadow bg-blue-300 px-4 py-2 font-bold text-gray-900 hover:bg-blue-400 transition-all duration-300 hover:-translate-y-1 inline-flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
         aria-label="Kembali ke daftar artikel"
       >
